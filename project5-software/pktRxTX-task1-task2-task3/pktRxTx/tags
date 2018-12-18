@@ -1,0 +1,162 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+ACK	backup/common.h	44;"	d
+ACK	common.h	48;"	d
+ARP_TABLE_ENTRIES	backup/if.c	34;"	d	file:
+ARP_entry	backup/if.c	/^struct ARP_entry $/;"	s	file:
+CC	Makefile	/^CC := gcc$/;"	m
+CFLAGS	Makefile	/^	CFLAGS := -g -O -I .\/pcap\/include$/;"	m
+CFLAGS	Makefile	/^	CFLAGS := -g -O$/;"	m
+DEPEND	Makefile	/^DEPEND	= $(OBJ:.o=.d)$/;"	m
+ERR	backup/common.h	45;"	d
+ERR	common.h	49;"	d
+ETHER_ADDR_LEN	pktheader.h	7;"	d
+HEADER_LEN	backup/common.h	58;"	d
+HEADER_LEN	common.h	62;"	d
+IPHDR_OFFSET	backup/common.h	61;"	d
+IPHDR_OFFSET	common.h	65;"	d
+IP_DF	pktheader.h	34;"	d
+IP_MF	pktheader.h	35;"	d
+IP_OFFMASK	pktheader.h	36;"	d
+IP_RF	pktheader.h	33;"	d
+LDFLAGS	Makefile	/^	LDFLAGS := -L$(PCAP_PATH) -lwpcap$/;"	m
+LDFLAGS	Makefile	/^	LDFLAGS :=$/;"	m
+LDLIBS	Makefile	/^	LDLIBS	:= -lpcap -lpthread -lnet$/;"	m
+MAC_ADDR_FIX	pktRxTx.c	44;"	d	file:
+OBJ	Makefile	/^OBJ	= pktRxTx.o print.o$/;"	m
+PACKET_LEN	backup/common.h	35;"	d
+PACKET_LEN	common.h	39;"	d
+PAYLOAD_OFFSET	backup/common.h	59;"	d
+PAYLOAD_OFFSET	common.h	63;"	d
+PCAP_PATH	Makefile	/^	PCAP_PATH := .\/pcap\/lib$/;"	m
+PREFIX	Makefile	/^	PREFIX := x86$/;"	m
+PRG	Makefile	/^PRG	= $(addprefix $(PREFIX)\/, pktRxTx)$/;"	m
+PSEUDO_SIZE	backup/common.h	63;"	d
+PSEUDO_SIZE	common.h	67;"	d
+SIZE_ETHERNET	backup/common.h	66;"	d
+SIZE_ETHERNET	common.h	70;"	d
+SRC	Makefile	/^SRC	= $(OBJ:.o=.c)$/;"	m
+SYNC	backup/common.h	43;"	d
+SYNC	common.h	47;"	d
+TCPHDR_OFFSET	backup/common.h	60;"	d
+TCPHDR_OFFSET	common.h	64;"	d
+__CHECKSUM_H__	backup/checksum.h	2;"	d
+__PKTHEADER_H__	pktheader.h	2;"	d
+ack	pktheader.h	/^            ack:1,$/;"	m	struct:tcphdr
+ack_seq	pktheader.h	/^    tcp_seq ack_seq;                 \/* acknowledgement number *\/$/;"	m	struct:tcphdr
+arp_table	backup/if.c	/^static struct ARP_entry arp_table[ARP_TABLE_ENTRIES];$/;"	v	typeref:struct:ARP_entry	file:
+arp_valid	backup/if.c	/^int arp_valid = 0;$/;"	v
+check	pktheader.h	/^	uint16_t check;					\/* IP checksum *\/$/;"	m	struct:iphdr
+check	pktheader.h	/^	uint16_t check;$/;"	m	struct:udphdr
+check	pktheader.h	/^    uint16_t check;                 \/* checksum *\/$/;"	m	struct:tcphdr
+checksum	backup/checksum.h	/^static inline uint16_t checksum(uint16_t *buf, int nbytes, uint32_t sum)$/;"	f
+csum	pktRxTx.c	/^csum(unsigned short *ptr, int nbytes)$/;"	f
+cwr	pktheader.h	/^            cwr:1;$/;"	m	struct:tcphdr
+daddr	pktheader.h	/^    uint32_t daddr;		\/* source and dest address *\/$/;"	m	struct:iphdr
+dest	pktheader.h	/^	uint16_t dest;$/;"	m	struct:udphdr
+dest	pktheader.h	/^    uint16_t dest;               \/* destination port *\/$/;"	m	struct:tcphdr
+dest_address	backup/common.h	/^	unsigned int dest_address;$/;"	m	struct:pseudo_header
+dest_address	common.h	/^	unsigned int dest_address;$/;"	m	struct:pseudo_header
+dest_mac_addr	pktRxTx.c	/^unsigned char dest_mac_addr[6] = { 0x10, 0x1b, 0x54, 0x84, 0x83, 0xd6 };$/;"	v
+dev	pktRxTx.c	/^char dev[50];$/;"	v
+diff	pktRxTx.c	/^timespec diff(struct timespec start, struct timespec end)$/;"	f
+doff	pktheader.h	/^            doff:4,               \/* data offset, rsvd *\/$/;"	m	struct:tcphdr
+ece	pktheader.h	/^            ece:1,$/;"	m	struct:tcphdr
+errbuf	pktRxTx.c	/^char errbuf[PCAP_ERRBUF_SIZE];$/;"	v
+ethhdr	pktheader.h	/^struct ethhdr$/;"	s
+fbin	pktRxTx.c	/^char fbin = 0;$/;"	v
+fin	pktheader.h	/^            fin:1,$/;"	m	struct:tcphdr
+frag_off	pktheader.h	/^	uint16_t frag_off;					\/* fragment offset field *\/$/;"	m	struct:iphdr
+get_arp	backup/if.c	/^void get_arp(int *cnt)$/;"	f
+get_arp_entry	backup/if.c	/^static struct ARP_entry *get_arp_entry(const char *name)$/;"	f	file:
+get_dest_ipaddr	backup/if.c	/^int get_dest_ipaddr(const char *name, char *addr)$/;"	f
+get_dest_macaddr	backup/if.c	/^int get_dest_macaddr(const char *name, unsigned char *mac)$/;"	f
+get_interface_ipaddr	backup/if.c	/^int get_interface_ipaddr(const char *name, int family, uint8_t *addr, int len)$/;"	f
+get_interface_macaddr	backup/if.c	/^int get_interface_macaddr(const char *name, unsigned char *mac)$/;"	f
+get_options	pktRxTx.c	/^int get_options(int argc, char *argv[])$/;"	f
+got_packet	backup/rxPckt.c	/^got_packet(u_char * args, const struct pcap_pkthdr *pkthdr,$/;"	f
+h_dest	pktheader.h	/^	uint8_t h_dest[ETHER_ADDR_LEN];     	\/* destination host hwaddr *\/$/;"	m	struct:ethhdr
+h_proto	pktheader.h	/^	uint16_t h_proto;						\/* IP?, ARP?, RARP? etc. *\/$/;"	m	struct:ethhdr
+h_source	pktheader.h	/^	uint8_t h_source[ETHER_ADDR_LEN];		\/* source host hwaddr *\/$/;"	m	struct:ethhdr
+handle	backup/rxPckt.c	/^pcap_t *handle;$/;"	v
+handle	pktRxTx.c	/^pcap_t *handle;$/;"	v
+id	pktheader.h	/^	uint16_t id;						\/* indetification *\/$/;"	m	struct:iphdr
+ihl	pktheader.h	/^	uint8_t ihl:4,$/;"	m	struct:iphdr
+insert_iphdr	pktRxTx.c	/^char insert_iphdr = 1, insert_tcphdr = 1;$/;"	v
+insert_tcphdr	pktRxTx.c	/^char insert_iphdr = 1, insert_tcphdr = 1;$/;"	v
+interval	pktRxTx.c	/^int interval = 1;$/;"	v
+intf	backup/if.c	/^	char intf[10];$/;"	m	struct:ARP_entry	file:
+ip	backup/if.c	/^	char ip[16];$/;"	m	struct:ARP_entry	file:
+ip_checksum	backup/checksum.h	/^static inline uint16_t ip_checksum(struct iphdr *hdr)$/;"	f
+iph	pktRxTx.c	/^struct iphdr iph;$/;"	v	typeref:struct:iphdr
+iphdr	pktheader.h	/^struct iphdr$/;"	s
+len	pktheader.h	/^	uint16_t len;$/;"	m	struct:udphdr
+log_file	pktRxTx.c	/^char log_file = 0, verbose = 0;$/;"	v
+log_packets	pktRxTx.c	/^log_packets(FILE ** fp, char *fname, int *fidx, const u_char * buf,$/;"	f	file:
+mac	backup/if.c	/^	unsigned char mac[6];$/;"	m	struct:ARP_entry	file:
+main	backup/rxPckt.c	/^int main(int argc, char *argv[])$/;"	f
+main	pktRxTx.c	/^int main(int argc, char *argv[])$/;"	f
+my_mac_addr	backup/rxPckt.c	/^char my_mac_addr[ETHER_ADDR_LEN] = { 0x08, 0x08, 0x08, 0x08, 0x08, 0x08 };$/;"	v
+need_ack	pktRxTx.c	/^char need_ack = 0;$/;"	v
+pkt	pktRxTx.c	/^char pkt[PACKET_LEN];$/;"	v
+placeholder	backup/common.h	/^	unsigned char placeholder;$/;"	m	struct:pseudo_header
+placeholder	common.h	/^	unsigned char placeholder;$/;"	m	struct:pseudo_header
+prepare_header	pktRxTx.c	/^prepare_header(const char *name)$/;"	f	file:
+print_hex_ascii_line	print.c	/^print_hex_ascii_line(const unsigned char * payload, int len, int offset, FILE * fp)$/;"	f
+print_payload	print.c	/^void print_payload(const unsigned char * payload, int len, FILE * fp)$/;"	f
+protocol	backup/common.h	/^	unsigned char protocol;$/;"	m	struct:pseudo_header
+protocol	common.h	/^	unsigned char protocol;$/;"	m	struct:pseudo_header
+protocol	pktheader.h	/^	uint8_t protocol;						\/* protocol *\/$/;"	m	struct:iphdr
+pseudo_header	backup/common.h	/^struct pseudo_header {    $/;"	s
+pseudo_header	common.h	/^struct pseudo_header {    $/;"	s
+pseudogram	pktRxTx.c	/^char pseudogram[PSEUDO_SIZE];$/;"	v
+psh	pktheader.h	/^            psh:1,$/;"	m	struct:tcphdr
+receive_packet	pktRxTx.c	/^void *receive_packet(void *arg)$/;"	f
+res1	pktheader.h	/^    uint16_t res1:4, $/;"	m	struct:tcphdr
+rfname	pktRxTx.c	/^char tfname[50], rfname[50];$/;"	v
+rst	pktheader.h	/^            rst:1,$/;"	m	struct:tcphdr
+rx_f	pktRxTx.c	/^FILE *rx_f = NULL;$/;"	v
+rx_fidx	pktRxTx.c	/^int rx_fidx;$/;"	v
+rx_thread	pktRxTx.c	/^pthread_t rx_thread;$/;"	v
+rx_thread	pktRxTx.c	/^unsigned int rx_thread;$/;"	v
+saddr	pktheader.h	/^	uint32_t saddr;$/;"	m	struct:iphdr
+send_packet	pktRxTx.c	/^send_packet(char *str, int len)$/;"	f
+sendnum	pktRxTx.c	/^int sendnum = 3;$/;"	v
+seq	pktheader.h	/^    tcp_seq seq;                 \/* sequence number *\/$/;"	m	struct:tcphdr
+setdev	pktRxTx.c	/^int setdev = 0;$/;"	v
+sig_handler	pktRxTx.c	/^void sig_handler(int signo)$/;"	f
+source	pktheader.h	/^	uint16_t source;$/;"	m	struct:udphdr
+source	pktheader.h	/^    uint16_t source;               \/* source port *\/$/;"	m	struct:tcphdr
+source_address	backup/common.h	/^	unsigned int source_address;$/;"	m	struct:pseudo_header
+source_address	common.h	/^	unsigned int source_address;$/;"	m	struct:pseudo_header
+src_mac_addr	pktRxTx.c	/^unsigned char src_mac_addr[6] = { 0x90, 0xe2, 0xba, 0x15, 0xcd, 0xd0 };$/;"	v
+syn	pktheader.h	/^            syn:1,$/;"	m	struct:tcphdr
+tcp_cc	pktheader.h	/^typedef uint32_t 	tcp_cc;$/;"	t
+tcp_checksum	backup/checksum.h	/^static inline uint16_t tcp_checksum(struct iphdr *ip, struct tcphdr *tcp)$/;"	f
+tcp_length	backup/common.h	/^	unsigned short tcp_length;$/;"	m	struct:pseudo_header
+tcp_length	common.h	/^	unsigned short tcp_length;$/;"	m	struct:pseudo_header
+tcp_seq	pktheader.h	/^typedef uint32_t 	tcp_seq;$/;"	t
+tcph	pktRxTx.c	/^struct tcphdr tcph;$/;"	v	typeref:struct:tcphdr
+tcphdr	pktheader.h	/^struct tcphdr {$/;"	s
+tfname	pktRxTx.c	/^char tfname[50], rfname[50];$/;"	v
+time_wait	pktRxTx.c	/^time_wait(int msec) {$/;"	f
+tos	pktheader.h	/^	uint8_t tos;						\/* type of service *\/$/;"	m	struct:iphdr
+tot_len	pktheader.h	/^	uint16_t tot_len;					\/* total length *\/$/;"	m	struct:iphdr
+ttl	pktheader.h	/^	uint8_t ttl;						\/* time to live *\/$/;"	m	struct:iphdr
+tx_cnt	pktRxTx.c	/^int tx_cnt = 0;$/;"	v
+tx_f	pktRxTx.c	/^FILE *tx_f = NULL;$/;"	v
+tx_fidx	pktRxTx.c	/^int tx_fidx;$/;"	v
+udphdr	pktheader.h	/^struct udphdr$/;"	s
+urg	pktheader.h	/^            urg:1,$/;"	m	struct:tcphdr
+urg_ptr	pktheader.h	/^    uint16_t urg_ptr;                 \/* urgent pointer *\/$/;"	m	struct:tcphdr
+usage	backup/rxPckt.c	/^static void usage(void)$/;"	f	file:
+usage	pktRxTx.c	/^usage(void)$/;"	f	file:
+verbose	backup/rxPckt.c	/^int verbose = 0;$/;"	v
+verbose	pktRxTx.c	/^char log_file = 0, verbose = 0;$/;"	v
+verify_checksum	backup/rxPckt.c	/^unsigned short verify_checksum(void *b, int len)$/;"	f
+version	pktheader.h	/^            version:4;						\/* version << 4 | header length >> 2 *\/$/;"	m	struct:iphdr
+window	pktheader.h	/^    uint16_t window;                 \/* window *\/$/;"	m	struct:tcphdr
