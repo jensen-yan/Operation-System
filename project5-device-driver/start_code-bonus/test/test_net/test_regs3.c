@@ -7,12 +7,12 @@
 #include "test5.h"
 
 queue_t recv_block_queue;
-uint32_t recv_flag[PNUM];
-uint32_t ch_flag;
-desc_t send_desc[64], receive_desc[64];
+uint32_t recv_flag[256];
+uint32_t ch_flag = -1;
+desc_t send_desc[64], receive_desc[256];
 //desc_t *send_desc;
 //desc_t *receive_desc;
-uint32_t cnt = 1; //record the time of iqr_mac
+uint32_t cnt = 0; 
 //uint32_t buffer[PSIZE] = {0x00040045, 0x00000100, 0x5d911120, 0x0101a8c0, 0xfb0000e0, 0xe914e914, 0x00000801,0x45000400, 0x00010000, 0x2011915d, 0xc0a80101, 0xe00000fb, 0x14e914e9, 0x01080000};
 uint32_t buffer[PSIZE] = {0xffffffff, 0x5500ffff, 0xf77db57d, 0x00450008, 0x0000d400, 0x11ff0040, 0xa8c073d8, 0x00e00101, 0xe914fb00, 0x0004e914, 0x0000, 0x005e0001, 0x2300fb00, 0x84b7f28b, 0x00450008, 0x0000d400, 0x11ff0040, 0xa8c073d8, 0x00e00101, 0xe914fb00, 0x0801e914, 0x0000};
 
@@ -62,7 +62,7 @@ static void recv_desc_init(mac_t *mac)
     uint32_t RxBuff = RXBUFFADDR;
     bzero((uint8_t *)RxBuff, PNUM*BUFFSIZE);
     int i;
-    for(i = 0; i < 63; i++)
+    for(i = 0; i < 255; i++)
     {
         receive_desc[i].tdes0 = 0;
         receive_desc[i].tdes1 = RxDisIntCompl | RxDescChain | BUFFSIZE;
@@ -72,10 +72,10 @@ static void recv_desc_init(mac_t *mac)
         RxBuff += BUFFSIZE;
     }
 
-    receive_desc[63].tdes0 = 0;
-    receive_desc[63].tdes1 = RxDisIntCompl | RxDescChain | RxDescEndOfRing | BUFFSIZE;
-    receive_desc[63].tdes2 = RxBuff & 0x1fffffff;
-    receive_desc[63].tdes3 = ((uint32_t)&receive_desc[0]) & 0x1fffffff;
+    receive_desc[255].tdes0 = 0;
+    receive_desc[255].tdes1 = RxDescChain | RxDescEndOfRing | BUFFSIZE;
+    receive_desc[255].tdes2 = RxBuff & 0x1fffffff;
+    receive_desc[255].tdes3 = ((uint32_t)&receive_desc[0]) & 0x1fffffff;
     
     mac->rd = (uint32_t)receive_desc;
     mac->rd_phy = (uint32_t)receive_desc & 0x1fffffff;
@@ -165,20 +165,21 @@ void phy_regs_task2()
 
     mii_dul_force(&test_mac);
 
+    irq_enable(LS1C_MAC_IRQ);
     queue_init(&recv_block_queue);
     sys_move_cursor(1, print_location);
     printf("[RECV TASK] start recv:                    ");
     ret = sys_net_recv(test_mac.rd, test_mac.rd_phy, test_mac.daddr);
 
     ch_flag = 0;
-    for (i = 0; i < PNUM; i++)
+    for (i = 0; i < 256; i++)
     {
-        recv_flag[i] = 0;
+        recv_flag[i] = (uint32_t)(test_mac.rd + i * 16);
     }
-
+    recv_flag[0] = (uint32_t)test_mac.rd;
     uint32_t cnt = 0;
     uint32_t *Recv_desc;
-    Recv_desc = (uint32_t *)(test_mac.rd + (PNUM - 1) * 16);
+    Recv_desc = (uint32_t *)(test_mac.rd + 255 * 16);
     //printf("(test_mac.rd 0x%x ,Recv_desc=0x%x,REDS0 0X%x\n", test_mac.rd, Recv_desc, *(Recv_desc));
     if (((*Recv_desc) & 0x80000000) == 0x80000000)
     {
@@ -187,7 +188,17 @@ void phy_regs_task2()
         sys_wait_recv_package();
     }
     check_recv(&test_mac);
+    while(1)
+    {
 
+        if (((*Recv_desc) & 0x80000000) == 0x80000000)
+        {
+            sys_wait_recv_package();
+        }
+        check_recv(&test_mac);
+    }
+    sys_move_cursor(1, 6);
+    printf("> [RECV TASK] receive %d package.        \n", cnt);
     sys_exit();
 }
 

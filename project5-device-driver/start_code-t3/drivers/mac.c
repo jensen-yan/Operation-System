@@ -238,7 +238,16 @@ void irq_mac(void)
 {
     if(!queue_is_empty(&recv_block_queue))
         do_unblock_one(&recv_block_queue);
+    desc_t *receive = (desc_t *)recv_flag[0];
     clear_interrupt();
+    /*int i;
+    for(i = 0; i < 4096; i++)
+    {
+        receive[i].tdes0 = DescOwnByDma;
+    }
+    for(i = 0; i < 4096; i++)
+        reg_write_32(DMA_BASE_ADDR + 0x8, 1);*/
+    
 }
 
 void irq_enable(int IRQn)
@@ -250,20 +259,26 @@ void check_recv(mac_t *test_mac)
 {
     desc_t *receive = (desc_t *)test_mac->rd;
     int i, j, print_location = 3, wrong = 0;
-    while(ch_flag < 64)
+    desc_t *receive = (desc_t *)recv_flag[0];
+    for(i = 0; i < 4096; i++)
+    {
+        if(!(receive[i].tdes0 & 0xf8cf))
+            ch_flag++;
+    }
+    /*while(ch_flag < 64)
     {
         if(!(receive[ch_flag].tdes0 & DescOwnByDma))
         {
             recv_flag[ch_flag] = 1;
 
             sys_move_cursor(1, print_location + 1);
-            printf(">> %d recv buff, rdes0: %x\n", ch_flag, receive[ch_flag].tdes0);
+            printf(">> %d recv buff, rdes0: %x  \n", ch_flag, receive[ch_flag].tdes0);
             if(receive[ch_flag].tdes0 & 0xf8cf)
             {
                 wrong++;
-                printk("!!!Receive invalid package.\n");
+                printk("!!!Receive invalid package.  \n");
             }
-            uint32_t *data = (uint32_t *)test_mac->daddr;
+            uint32_t *data = (uint32_t *)(test_mac->daddr + 0x400 * ch_flag);
             for(j = 0; j < 256; j++)
                 printf("%x ", data[j]);
             printf("\n");
@@ -273,11 +288,12 @@ void check_recv(mac_t *test_mac)
         {
             recv_flag[ch_flag] = (uint32_t)&receive[ch_flag].tdes0;
             sys_move_cursor(1, print_location);
-            printf(">>[RECV TASK]still waiting receive %dth package.\n", i);
+            printf(">>[RECV TASK]still waiting receive %dth package.  \n", i);
             sys_wait_recv_package();
         }
-    }
-    printf(">>Successfully Receive %d Valid Packages, %d Invalid Packages!\n", 64-wrong, wrong);;
+    }*/
+    vt100_move_cursor(0, 6);
+    printk(">>Receive %d Valid Packages\n",ch_flag);;
 }
 
 void set_sram_ctr()
@@ -325,22 +341,13 @@ uint32_t do_net_recv(uint32_t rd, uint32_t rd_phy, uint32_t daddr)
     //you should add some code to start recv and check recv packages
     int i;
     desc_t *receive = (desc_t *)rd;
-    for(i = 0; i < 64; i++)
+    for(i = 0; i < 4096; i++)
     {
         receive[i].tdes0 = DescOwnByDma;
     }
-    for(i = 0; i < 64; i++)
+    for(i = 0; i < 4096; i++)
         reg_write_32(DMA_BASE_ADDR + 0x8, 1);
-    int end = 63;
-    for(i = 0; i < 64; i++)
-    {
-        if(!(receive[i].tdes0 & DescOwnByDma))
-        {
-            end = i;
-        }
-        receive[i].tdes0 = DescOwnByDma;
-    }
-    receive[end].tdes1 = receive[end].tdes1 & ~RxDisIntCompl;
+
     //print_dma_regs();
     return 0;
 }

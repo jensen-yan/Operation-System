@@ -290,7 +290,7 @@ uint32_t do_net_recv(uint32_t rd, uint32_t rd_phy, uint32_t daddr)
     reg_write_32(DMA_BASE_ADDR + 0x1c, 0x10001 | (1 << 6));
     
     //you should add some code to start recv and check recv packages
-    int i;
+    int i, wrong = 0;
     desc_t *receive = (desc_t *)rd;
     for(i = 0; i < 64; i++)
     {
@@ -302,17 +302,22 @@ uint32_t do_net_recv(uint32_t rd, uint32_t rd_phy, uint32_t daddr)
     {
         if(!(receive[i].tdes0 & DescOwnByDma))
         {
-            i++;
-            vt100_move_cursor(1, 3);
-            printk(">> %d recv buff, rdes0: %x\n", i, receive[i].tdes0);
-            uint32_t *data = (uint32_t *)daddr;
+            vt100_move_cursor(1, 4);
+            printk(">> %d recv buff, rdes0: %x        \n", i, receive[i].tdes0);
+            if(receive[i].tdes0 & 0xf8cf)
+            {
+                wrong++;
+                printk("!!!Receive invalid package.     \n");
+            }
+            uint32_t *data = (uint32_t *)(daddr + 0x400 * i);
             int j;
             for(j = 0; j < 256; j++)
                 printk("%x ", data[j]);
             printk("\n");
+            i++;
         }
     }
-    printk(">>Successfully Receive 64 Valid Packages!\n");
+    printk(">>Successfully Receive %d Valid Packages, %d Invalid Packages!  \n", 64-wrong, wrong);
     return 0;
 }
 
@@ -334,6 +339,7 @@ void do_net_send(uint32_t td, uint32_t td_phy)
     }
     for(i = 0; i < 64; i++)
         reg_write_32(DMA_BASE_ADDR + 0x4, 1);
+    
 }
 
 void do_init_mac(void)

@@ -16,8 +16,9 @@
 #define LS1C_MAC_IRQ 35
 
 extern queue_t recv_block_queue;
-extern uint32_t recv_flag[PNUM];
+extern uint32_t recv_flag[256];
 extern uint32_t ch_flag;
+extern uint32_t cnt;
 enum GmacRegisters
 {
     GmacConfig = 0x0000,      /* Mac config Register                       */

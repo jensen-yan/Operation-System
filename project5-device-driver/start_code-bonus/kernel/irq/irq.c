@@ -6,7 +6,6 @@
 #include "screen.h"
 int j = 1;
 int location = -2;
-int tt = 0;
 static void irq_timer()
 {
     // TODO clock interrupt handler.
@@ -43,7 +42,11 @@ void interrupt_helper(uint32_t status, uint32_t cause)
     if(interrupt & 0x00008000)
         irq_timer();
     else if(interrupt == 0x0800 && (reg_read_32(0xbfd01058) & 0x8))
+    {
         irq_mac();
+        vt100_move_cursor(0, 6);
+        printk("%d Packages!", cnt);
+    }
     else
         other_exception_handler();
 }

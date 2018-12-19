@@ -253,13 +253,13 @@ void check_recv(mac_t *test_mac)
             recv_flag[ch_flag] = 1;
 
             sys_move_cursor(1, print_location + 1);
-            printf(">> %d recv buff, rdes0: %x\n", ch_flag, receive[ch_flag].tdes0);
+            printf(">> %d recv buff, rdes0: %x   \n", ch_flag, receive[ch_flag].tdes0);
             if(receive[ch_flag].tdes0 & 0xf8cf)
             {
                 wrong++;
-                printk("!!!Receive invalid package.\n");
+                printk("!!!Receive invalid package.   \n");
             }
-            uint32_t *data = (uint32_t *)test_mac->daddr;
+            uint32_t *data = (uint32_t *)(test_mac->daddr + 0x400 * ch_flag);
             for(j = 0; j < 256; j++)
                 printf("%x ", data[j]);
             printf("\n");
@@ -269,11 +269,11 @@ void check_recv(mac_t *test_mac)
         {
             recv_flag[ch_flag] = (uint32_t)&receive[ch_flag].tdes0;
             sys_move_cursor(1, print_location);
-            printf(">>[RECV TASK]still waiting receive %dth package.\n", i);
+            printf(">>[RECV TASK]still waiting receive %dth package.   \n", i);
             sys_wait_recv_package();
         }
     }
-    printf(">>Successfully Receive %d Valid Packages, %d Invalid Packages!\n", 64-wrong, wrong);;
+    printf(">>Successfully Receive %d Valid Packages, %d Invalid Packages!  \n", 64-wrong, wrong);;
 }
 
 void set_sram_ctr()
