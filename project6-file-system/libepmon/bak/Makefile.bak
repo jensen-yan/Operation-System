@@ -1,0 +1,34 @@
+CC = mipsel-linux-gcc
+AR = mipsel-linux-ar
+
+all: build copy
+
+build: libepmon.a libmemcopy.a libwritesb.a
+
+libepmon.a: myepmon.o
+	${AR} crv $@ printstr.o printch.o sdwrite.o sdread.o
+
+libmemcopy.a: memcopy.o
+	${AR} crv $@ memcopy.o
+
+libwritesb.a: Write_Single_Block.o
+	${AR} crv $@ Write_Single_Block.o
+
+myepmon.o: printstr.c printch.c sdwrite.c sdread.c
+	${CC} -c printstr.c printch.c sdwrite.c sdread.c
+
+memcopy.o: memcopy.c
+	${CC} -c memcopy.c
+
+Write_Single_Block.o: Write_Single_Block.c
+	${CC} -c Write_Single_Block.c
+
+copy: copy1 copy2
+
+copy1:
+	#cp libepmon.a libmemcopy.a libwritesb.a  /mnt/shared/sd_write_p1/
+copy2:
+	cp libepmon.a libmemcopy.a libwritesb.a  /mnt/shared/p1_for_qemu/libs/ 
+
+clean:
+	rm -rf *.a *.o
